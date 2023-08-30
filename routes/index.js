@@ -8,9 +8,10 @@ const { validateSignin, validateSignup } = require('../middlewares/validator');
 
 router.post('/signup', validateSignup, signup);
 router.post('/signin', validateSignin, signin);
-router.post('/signout', auth, signout);
-router.use('/users', auth, userRouter);
-router.use('/movies', auth, movieRouter);
-router.use('*', auth, (req, res, err, next) => next(new NotFoundError('Запрашиваемая страница не найдена.')));
+router.use(auth);
+router.post('/signout', signout);
+router.use('/users', userRouter);
+router.use('/movies', movieRouter);
+router.use('*', (req, res, next) => next(new NotFoundError('Запрашиваемая страница не найдена.')));
 
 module.exports = router;

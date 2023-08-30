@@ -30,6 +30,9 @@ module.exports.editCurrentUser = (req, res, next) => {
       return res.send({ user });
     })
     .catch((err) => {
+      if (err.code === 11000) {
+        return next(new ConflictingRequestError('Пользователь с данной почтой уже существует.'));
+      }
       if (err.name === 'ValidationError') {
         return next(new BadRequestError('Переданы некорректные данные при получении пользователя.'));
       }
