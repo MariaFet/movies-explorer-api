@@ -73,7 +73,7 @@ module.exports.signin = (req, res, next) => {
             maxAge: 3600000,
             httpOnly: true,
           });
-          return res.send('Авторизация прошла успешно.');
+          return res.send(user._id);
         });
     })
     .catch((err) => next(err));
